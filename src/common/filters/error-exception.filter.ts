@@ -1,14 +1,12 @@
 import {
   ArgumentsHost,
-  BadRequestException,
   Catch,
   ExceptionFilter,
-  HttpException,
 } from '@nestjs/common';
+// Captar e modificar exceções
 @Catch(Error)
 export class ErrorExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
-    console.log('Deu erro');
     const context = host.switchToHttp();
     const response = context.getResponse();
     const request = context.getRequest();

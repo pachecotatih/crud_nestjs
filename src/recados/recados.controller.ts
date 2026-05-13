@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -8,8 +7,6 @@ import {
   Patch,
   Post,
   Query,
-  Req,
-  UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
@@ -17,7 +14,6 @@ import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
-import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 
 // PATCH / PUT -> Atualizar um recado
 
@@ -29,13 +25,13 @@ import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interce
 @Controller('recados')
 //@UseInterceptors(AuthTokenInterceptor)
 @UsePipes(ParseIntIdPipe)
-@UseInterceptors(AuthTokenInterceptor)
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   //Encontrar todos os recados
   @Get()
-  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
-    throw new BadRequestException('Erro!!!');
+  async findAll(@Query() paginationDto: PaginationDto) {
+    const recados = await this.recadosService.findAll(paginationDto);
+    return recados;
   }
 
   @Get(':id')

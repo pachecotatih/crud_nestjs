@@ -7,7 +7,8 @@ GET {{baseUrl}}/recados
 &offset=0
 Authorization: Bearer 123456
 ###
-GET {{baseUrl}}/recados/11
+GET {{baseUrl}}/recados/26
+Authorization: Bearer 123456
 
 ###
 POST {{baseUrl}}/recados
@@ -20,14 +21,14 @@ Content-Type: application/json
 }
 
 ###
-PATCH {{baseUrl}}/recados/13
+PATCH {{baseUrl}}/recados/26
 Content-Type: application/json
 
 {
     "texto":"Novo Texto"
 }
 ###
-DELETE {{baseUrl}}/recados/2
+DELETE {{baseUrl}}/recados/26
 
 
 
@@ -38,24 +39,24 @@ DELETE {{baseUrl}}/recados/2
 ### 
 GET {{baseUrl}}/pessoas/?limit=30&offset=0&user=tatiana
 ###
-GET {{baseUrl}}/pessoas/12
+GET {{baseUrl}}/pessoas/14
 
 ###
 POST {{baseUrl}}/pessoas
 Content-Type: application/json
 
 {
-    "email":"tatianapacheco@email.com",
+    "email":"tatianapacheco1@email.com",
     "password":"123456",
     "nome":"Tatiana Pacheco"
 }
 
 ###
-PATCH {{baseUrl}}/pessoas/12
+PATCH {{baseUrl}}/pessoas/14
 Content-Type: application/json
 
 {
     "password":"123456"
 }
 ###
-DELETE {{baseUrl}}/pessoas/13
+DELETE {{baseUrl}}/pessoas/14

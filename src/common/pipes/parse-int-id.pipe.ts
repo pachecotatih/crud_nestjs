@@ -4,7 +4,7 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-
+// Manipular, transformar ou validar o corpo da requisição
 @Injectable() // funciona a função mesmo se não utilizar isso, mas se for adicionar uma dependência (como um service de recados por exemplo), vai dar erro.
 export class ParseIntIdPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {

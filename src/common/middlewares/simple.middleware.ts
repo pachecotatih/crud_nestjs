@@ -1,18 +1,17 @@
-// Cliente (Navegador) -> (Servidor) -> Vários Middleware (Request, Response)
+// Cliente (Navegador) -> (Servidor) -> Vários Middleware (Request, Response): mais próximo do servidor, nem chegou ao nestjs
 // -> NestJs (Guards, Interceptors, Pipes, Filters)
 
 import { NestMiddleware } from '@nestjs/common';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 export class SimpleMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void) {
-    console.log('SimpleMiddleware executado.');
     const authorization = req.headers?.authorization;
     if (authorization) {
-      console.log('SimpleMiddleware Autorizado');
       req['user'] = {
         nome: 'Tatiana',
         sobrenome: 'Pacheco',
+        role: 'admin',
       };
     }
 
@@ -22,13 +21,12 @@ export class SimpleMiddleware implements NestMiddleware {
     // return res.status(404).send({
     //   message: 'Não encontrado',
     // });
-    
+
     next(); // Próximo middleware
 
-    console.log('SimpleMiddleware tchau.');
-    // após a execução do nest
-    res.on('finish', () => {
-      console.log('SimpleMiddleware finalizado.');
-    });
+    // // após a execução do nest
+    // res.on('finish', () => {
+    //   console.log('SimpleMiddleware finalizado.');
+    // });
   }
 }
