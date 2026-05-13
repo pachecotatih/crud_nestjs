@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:3000
+
+# RECADOS
+### 
+GET {{baseUrl}}/recados?limit=10
+###
+GET {{baseUrl}}/recados/12
+
+###
+POST {{baseUrl}}/recados
+Content-Type: application/json
+
+{
+    "texto": "Comprar leite create",
+    "deId": 14,
+    "paraId": 12
+}
+
+###
+PATCH {{baseUrl}}/recados/13
+Content-Type: application/json
+
+{
+    "texto":"Novo Texto"
+}
+###
+DELETE {{baseUrl}}/recados/2
+
+
+
+
+
+
+# PESSOAS
+### 
+GET {{baseUrl}}/pessoas/?limit=30&offset=0&user=tatiana
+###
+GET {{baseUrl}}/pessoas/12
+
+###
+POST {{baseUrl}}/pessoas
+Content-Type: application/json
+
+{
+    "email":"tatianapacheco@email.com",
+    "password":"123456",
+    "nome":"Tatiana Pacheco"
+}
+
+###
+PATCH {{baseUrl}}/pessoas/12
+Content-Type: application/json
+
+{
+    "password":"123456"
+}
+###
+DELETE {{baseUrl}}/pessoas/13

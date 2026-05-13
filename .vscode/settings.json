@@ -1,0 +1,9 @@
+{
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "never",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "explicit"
+  },
+}
