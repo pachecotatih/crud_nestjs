@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -25,14 +27,15 @@ import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interce
 // DTO - Data Transfer Object -> Objeto de transferência de dados
 // DTO -> Objeto simples de transporte de dados -> Validar dados / Transformar dados
 @Controller('recados')
-@UseInterceptors(AuthTokenInterceptor)
+//@UseInterceptors(AuthTokenInterceptor)
 @UsePipes(ParseIntIdPipe)
+@UseInterceptors(AuthTokenInterceptor)
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   //Encontrar todos os recados
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
-    return this.recadosService.findAll(paginationDto);
+  findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
+    throw new BadRequestException('Erro!!!');
   }
 
   @Get(':id')
