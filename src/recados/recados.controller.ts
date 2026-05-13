@@ -15,7 +15,7 @@ import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
-import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
+import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 
 // PATCH / PUT -> Atualizar um recado
 
@@ -25,7 +25,7 @@ import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interce
 // DTO - Data Transfer Object -> Objeto de transferência de dados
 // DTO -> Objeto simples de transporte de dados -> Validar dados / Transformar dados
 @Controller('recados')
-@UseInterceptors(AddHeaderInterceptor)
+@UseInterceptors(AuthTokenInterceptor)
 @UsePipes(ParseIntIdPipe)
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}

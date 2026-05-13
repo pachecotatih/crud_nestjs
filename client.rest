@@ -2,7 +2,10 @@
 
 # RECADOS
 ### 
-GET {{baseUrl}}/recados?limit=10
+GET {{baseUrl}}/recados
+?limit=10
+&offset=0
+Authorization: Bearer 123456
 ###
 GET {{baseUrl}}/recados/12
 
