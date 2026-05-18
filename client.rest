@@ -7,7 +7,7 @@ GET {{baseUrl}}/recados
 &offset=0
 Authorization: Bearer 123456
 ###
-GET {{baseUrl}}/recados/26
+GET {{baseUrl}}/recados/47
 Authorization: Bearer 123456
 
 ###
