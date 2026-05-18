@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
   Param,
   Patch,
   Post,
@@ -15,12 +14,6 @@ import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
-import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
-import {
-  ONLY_LOWERCASE_LETTERS_REGEX,
-  REMOVE_SPACES_REGEX,
-} from './recados.constant';
-import { OnlyLowercaseLettersRegex } from 'src/common/regex/only-lowercase-letters.regex';
 
 // PATCH / PUT -> Atualizar um recado
 
@@ -33,18 +26,10 @@ import { OnlyLowercaseLettersRegex } from 'src/common/regex/only-lowercase-lette
 //@UseInterceptors(AuthTokenInterceptor)
 @UsePipes(ParseIntIdPipe)
 export class RecadosController {
-  constructor(
-    private readonly recadosService: RecadosService,
-    @Inject(REMOVE_SPACES_REGEX)
-    private readonly removeSpacesRegex: RemoveSpacesRegex,
-    @Inject(ONLY_LOWERCASE_LETTERS_REGEX)
-    private readonly onlyLowercaseLettersRegex: OnlyLowercaseLettersRegex,
-  ) {}
+  constructor(private readonly recadosService: RecadosService) {}
   //Encontrar todos os recados
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
-    console.log(this.removeSpacesRegex.execute('Olá Mundo!'));
-    console.log(this.onlyLowercaseLettersRegex.execute('Olá Mundo!'));
     const recados = await this.recadosService.findAll(paginationDto);
     return recados;
   }
