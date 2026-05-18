@@ -5,31 +5,35 @@ import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
-import appConfig from './app.config';
+import globalConfig from 'src/global-config/global-config';
+import { GlobalConfigModule } from 'src/global-config/global-config.module';
 
 // TypeOrmModule.forRoot() -> para raiz da aplicação
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forFeature(globalConfig),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule.forFeature(appConfig)],
-      inject: [appConfig.KEY],
-      useFactory: async (appConfigurations: ConfigType<typeof appConfig>) => {
-        console.log('TypeOrmModule', appConfigurations.environment);
+      imports: [ConfigModule.forFeature(globalConfig)],
+      inject: [globalConfig.KEY],
+      useFactory: async (
+        globalConfigurations: ConfigType<typeof globalConfig>,
+      ) => {
+        console.log('TypeOrmModule', globalConfigurations.environment);
         return {
-          type: appConfigurations.database.type,
-          host: appConfigurations.database.host,
-          port: appConfigurations.database.port,
-          username: appConfigurations.database.username,
-          password: appConfigurations.database.password,
-          database: appConfigurations.database.database,
-          autoLoadEntities: appConfigurations.database.autoLoadEntities, // carrega automaticamente as entidades do projeto sem especificá-las
-          synchronize: appConfigurations.database.synchronize, // Sincroniza com o banco de dados. Não deve ser usado em produção
+          type: globalConfigurations.database.type,
+          host: globalConfigurations.database.host,
+          port: globalConfigurations.database.port,
+          username: globalConfigurations.database.username,
+          password: globalConfigurations.database.password,
+          database: globalConfigurations.database.database,
+          autoLoadEntities: globalConfigurations.database.autoLoadEntities, // carrega automaticamente as entidades do projeto sem especificá-las
+          synchronize: globalConfigurations.database.synchronize, // Sincroniza com o banco de dados. Não deve ser usado em produção
         };
       },
     }),
     RecadosModule,
     PessoasModule,
+    GlobalConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
