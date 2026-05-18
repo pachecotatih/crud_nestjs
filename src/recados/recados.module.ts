@@ -4,14 +4,13 @@ import { RecadosService } from './recados.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recado } from './entities/recado.entity';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
-import { RecadosUtils, RecadosUtilsMock } from './recados.utils';
+import { RecadosUtils } from './recados.utils';
+import { RegexFactory } from 'src/common/regex/regex.factory';
 import {
   ONLY_LOWERCASE_LETTERS_REGEX,
   REMOVE_SPACES_REGEX,
-  SERVER_NAME,
-} from 'src/recados/recados.constant';
+} from './recados.constant';
 import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
-import { OnlyLowercaseLettersRegex } from 'src/common/regex/only-lowercase-letters.regex';
 
 @Module({
   imports: [
@@ -21,24 +20,23 @@ import { OnlyLowercaseLettersRegex } from 'src/common/regex/only-lowercase-lette
   controllers: [RecadosController],
   providers: [
     RecadosService,
+    RecadosUtils,
+    RegexFactory,
     {
-      provide: RecadosUtils, // Token
-      //useValue: new RecadosUtilsMock(), // Valor a ser usado
-      useClass: RecadosUtils,
+      provide: REMOVE_SPACES_REGEX, // token
+      useFactory: (regexFactory: RegexFactory) => {
+        return regexFactory.create('RemoveSpacesRegex');
+      },
+      inject: [RegexFactory], // vão ser injetadas na factory na ordem, por exemplo (regexFactory: RegexFactory)
     },
     {
-      provide: SERVER_NAME,
-      useValue: 'My name is NestJS',
-    },
-    {
-      provide: ONLY_LOWERCASE_LETTERS_REGEX,
-      useClass: OnlyLowercaseLettersRegex,
-    },
-    {
-      provide: REMOVE_SPACES_REGEX,
-      useClass: RemoveSpacesRegex,
+      provide: ONLY_LOWERCASE_LETTERS_REGEX, // token
+      useFactory: (regexFactory: RegexFactory) => {
+        return regexFactory.create('OnlyLowercaseLettersRegex');
+      },
+      inject: [RegexFactory], // vão ser injetadas na factory na ordem, por exemplo (regexFactory: RegexFactory)
     },
   ],
-  exports: [RecadosUtils, SERVER_NAME],
+  exports: [RecadosUtils],
 })
 export class RecadosModule {}
