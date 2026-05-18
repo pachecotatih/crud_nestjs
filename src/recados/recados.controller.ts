@@ -14,6 +14,7 @@ import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
+import { RecadosUtils } from './recados.utils';
 
 // PATCH / PUT -> Atualizar um recado
 
@@ -26,7 +27,10 @@ import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 //@UseInterceptors(AuthTokenInterceptor)
 @UsePipes(ParseIntIdPipe)
 export class RecadosController {
-  constructor(private readonly recadosService: RecadosService) {}
+  constructor(
+    private readonly recadosService: RecadosService,
+    private readonly recadosUtils: RecadosUtils,
+  ) {}
   //Encontrar todos os recados
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
