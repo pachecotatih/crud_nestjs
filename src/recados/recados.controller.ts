@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -15,6 +16,11 @@ import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 import { RecadosUtils } from './recados.utils';
+import type { RegexProtocol } from 'src/common/regex/regex.protocol';
+import {
+  ONLY_LOWERCASE_LETTERS_REGEX,
+  REMOVE_SPACES_REGEX,
+} from './recados.constant';
 
 // PATCH / PUT -> Atualizar um recado
 
@@ -30,10 +36,18 @@ export class RecadosController {
   constructor(
     private readonly recadosService: RecadosService,
     private readonly recadosUtils: RecadosUtils,
+    @Inject('SERVER_NAME')
+    private readonly serverName: string,
+    @Inject(REMOVE_SPACES_REGEX)
+    private readonly removeSpacesRegex: RegexProtocol,
+    @Inject(ONLY_LOWERCASE_LETTERS_REGEX)
+    private readonly onlyLowercaseLettersRegex: RegexProtocol,
   ) {}
   //Encontrar todos os recados
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
+    console.log(this.removeSpacesRegex.execute(this.serverName));
+    console.log(this.onlyLowercaseLettersRegex.execute(this.serverName));
     const recados = await this.recadosService.findAll(paginationDto);
     return recados;
   }

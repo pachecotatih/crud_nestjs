@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Inject,
 } from '@nestjs/common';
 import { PessoasService } from './pessoas.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
@@ -17,6 +18,8 @@ export class PessoasController {
   constructor(
     private readonly pessoasService: PessoasService,
     private readonly recadosUtils: RecadosUtils,
+    @Inject('SERVER_NAME')
+    private readonly serverName: string,
   ) {}
 
   @Post()
