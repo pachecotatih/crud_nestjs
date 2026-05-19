@@ -44,7 +44,7 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/pessoas/?limit=30&offset=0&user=tatiana
 Authorization: Bearer {{authToken}}
 ###
-GET {{baseUrl}}/pessoas/23
+GET {{baseUrl}}/pessoas/26
 Authorization: Bearer {{authToken}}
 ###
 POST {{baseUrl}}/pessoas
@@ -53,7 +53,8 @@ Content-Type: application/json
 {
     "email":"teste@email.com",
     "password":"123456",
-    "nome":"Tatiana Pacheco"
+    "nome":"Tatiana Pacheco",
+    "routePolicies": ["findOneRecado", "createRecado"]
 }
 
 ###
@@ -77,7 +78,7 @@ POST {{baseUrl}}/auth
 Content-Type: application/json
 
 {
-    "email":"tatianapacheco09@email.com",
+    "email":"teste@email.com",
     "password":"123456"
 }
 
