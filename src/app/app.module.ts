@@ -7,6 +7,7 @@ import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import globalConfig from 'src/global-config/global-config';
 import { GlobalConfigModule } from 'src/global-config/global-config.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 // TypeOrmModule.forRoot() -> para raiz da aplicação
 @Module({
@@ -33,6 +34,7 @@ import { GlobalConfigModule } from 'src/global-config/global-config.module';
     RecadosModule,
     PessoasModule,
     GlobalConfigModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

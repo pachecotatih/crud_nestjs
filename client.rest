@@ -46,17 +46,32 @@ POST {{baseUrl}}/pessoas
 Content-Type: application/json
 
 {
-    "email":"tatianapacheco12@email.com",
+    "email":"tatianapacheco09@email.com",
     "password":"123456",
     "nome":"Tatiana Pacheco"
 }
 
 ###
-PATCH {{baseUrl}}/pessoas/14
+PATCH {{baseUrl}}/pessoas/21
 Content-Type: application/json
 
 {
-    "password":"123456"
+    "nome":"Tati"
 }
 ###
 DELETE {{baseUrl}}/pessoas/14
+
+
+
+
+### 
+POST {{baseUrl}}/auth
+Content-Type: application/json
+
+{
+    "email":"tatianapacheco09@email.com",
+    "password":"123456"
+}
+
+
+###
