@@ -53,8 +53,7 @@ Content-Type: application/json
 {
     "email":"teste123@email.com",
     "password":"123456",
-    "nome":"Tatiana Pacheco",
-    "routePolicies": ["findOneRecado", "createRecado"]
+    "nome":"Tatiana Pacheco"
 }
 
 ###
@@ -78,7 +77,7 @@ POST {{baseUrl}}/auth
 Content-Type: application/json
 
 {
-    "email":"teste123@email.com",
+    "email":"tatianapacheco09@email.com",
     "password":"123456"
 }
 
@@ -91,3 +90,23 @@ Content-Type: application/json
 {
     "refreshToken":"{{refreshToken}}"
 }
+
+
+
+
+
+
+# Uploads
+### Foto da Pessoa
+POST {{baseUrl}}/pessoas/upload-picture
+Content-Type: multipart/form-data; boundary=----BoundaryDelimitadorHttp
+Authorization: Bearer {{authToken}}
+
+------BoundaryDelimitadorHttp
+Content-Disposition: form-data; name="file"; filename="foto.png"
+Content-Type: image/png
+
+< ./dev/images/foto.png
+
+
+------BoundaryDelimitadorHttp--
