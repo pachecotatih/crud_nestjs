@@ -18,7 +18,6 @@ import { GlobalConfigModule } from 'src/global-config/global-config.module';
       useFactory: async (
         globalConfigurations: ConfigType<typeof globalConfig>,
       ) => {
-        console.log('TypeOrmModule', globalConfigurations.environment);
         return {
           type: globalConfigurations.database.type,
           host: globalConfigurations.database.host,
