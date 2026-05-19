@@ -108,12 +108,4 @@ Content-Type: image/png
 
 < ./dev/images/foto.png
 
-
-------BoundaryDelimitadorHttp
-Content-Disposition: form-data; name="file"; filename="img.png"
-Content-Type: image/png
-
-< ./dev/images/img.png
-
-
 ------BoundaryDelimitadorHttp--
