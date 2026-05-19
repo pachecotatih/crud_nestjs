@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 @authToken = {{authenticate.response.body.accessToken}}
-
+@refreshToken = {{authenticate.response.body.refreshToken}}
 # RECADOS
 ### 
 GET {{baseUrl}}/recados
@@ -83,3 +83,10 @@ Content-Type: application/json
 
 
 ###
+# @name reauthenticate
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken":"{{refreshToken}}"
+}
