@@ -33,11 +33,11 @@ export class RoutePolicyGuard implements CanActivate {
       );
     }
     const { pessoa }: { pessoa: Pessoa } = tokenPayload;
-    if (!pessoa.routePolicies.includes(routePolicyRequired)) {
-      throw new UnauthorizedException(
-        `Rota requer permissão ${routePolicyRequired}. Permissões insuficientes.`,
-      );
-    }
+    // if (!pessoa.routePolicies.includes(routePolicyRequired)) {
+    //   throw new UnauthorizedException(
+    //     `Rota requer permissão ${routePolicyRequired}. Permissões insuficientes.`,
+    //   );
+    // }
     return true;
   }
 }

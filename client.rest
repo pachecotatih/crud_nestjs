@@ -51,7 +51,7 @@ POST {{baseUrl}}/pessoas
 Content-Type: application/json
 
 {
-    "email":"teste@email.com",
+    "email":"teste123@email.com",
     "password":"123456",
     "nome":"Tatiana Pacheco",
     "routePolicies": ["findOneRecado", "createRecado"]
@@ -78,7 +78,7 @@ POST {{baseUrl}}/auth
 Content-Type: application/json
 
 {
-    "email":"teste@email.com",
+    "email":"teste123@email.com",
     "password":"123456"
 }
 
