@@ -44,7 +44,7 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/pessoas/?limit=30&offset=0&user=tatiana
 Authorization: Bearer {{authToken}}
 ###
-GET {{baseUrl}}/pessoas/26
+GET {{baseUrl}}/pessoas/23
 Authorization: Bearer {{authToken}}
 ###
 POST {{baseUrl}}/pessoas
@@ -103,9 +103,12 @@ Content-Type: multipart/form-data; boundary=----BoundaryDelimitadorHttp
 Authorization: Bearer {{authToken}}
 
 ------BoundaryDelimitadorHttp
-Content-Disposition: form-data; name="file"; filename="foto.png"
-Content-Type: image/png
+Content-Disposition: form-data; name="file"; filename="images.jpg"
+Content-Type: image/jpeg
 
-< ./dev/images/foto.png
+< ./dev/images/images.jpg
 
 ------BoundaryDelimitadorHttp--
+
+### Ver Foto
+GET {{baseUrl}}/pictures/23.png

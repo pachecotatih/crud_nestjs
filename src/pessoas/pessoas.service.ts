@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -11,7 +12,9 @@ import { Pessoa } from './entities/pessoa.entity';
 import { Repository } from 'typeorm';
 import { HashingServiceProtocol } from 'src/auth/hashing/hashing.service';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
-
+import * as path from 'path';
+import * as fs from 'fs/promises'; //filesystem
+import { randomUUID } from 'crypto';
 @Injectable()
 export class PessoasService {
   constructor(
@@ -88,5 +91,27 @@ export class PessoasService {
       throw new ForbiddenException('Acesso negado!');
     }
     return this.pessoaRepository.remove(pessoa);
+  }
+  async uploadPicture(
+    file: Express.Multer.File,
+    tokenPayload: TokenPayloadDto,
+  ) {
+    if (file.size < 1024) {
+      throw new BadRequestException('File is too small. Minimum size is 1KB.');
+    }
+    const pessoa = await this.findOne(tokenPayload.sub);
+    if (!pessoa) {
+      throw new NotFoundException('Pessoa não encontrada');
+    }
+    const fileExtension = path
+      .extname(file.originalname)
+      .toLocaleLowerCase()
+      .substring(1);
+    const fileName = `${tokenPayload.sub}.${fileExtension}`;
+    const fileFullPath = path.resolve(process.cwd(), 'pictures', fileName);
+    await fs.writeFile(fileFullPath, file.buffer);
+    pessoa.picture = fileName;
+    await this.pessoaRepository.save(pessoa);
+    return pessoa;
   }
 }

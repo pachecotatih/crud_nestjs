@@ -8,10 +8,15 @@ import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import globalConfig from 'src/global-config/global-config';
 import { GlobalConfigModule } from 'src/global-config/global-config.module';
 import { AuthModule } from 'src/auth/auth.module';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 // TypeOrmModule.forRoot() -> para raiz da aplicação
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, '..', '..', 'pictures'),
+      serveRoot: '/pictures',
+    }),
     ConfigModule.forFeature(globalConfig),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forFeature(globalConfig)],
@@ -34,7 +39,7 @@ import { AuthModule } from 'src/auth/auth.module';
     RecadosModule,
     PessoasModule,
     GlobalConfigModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

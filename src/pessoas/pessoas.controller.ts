@@ -85,22 +85,6 @@ export class PessoasController {
     file: Express.Multer.File,
     @TokenPayloadParam() tokenPayload: TokenPayloadDto,
   ) {
-    if (file.size < 1024) {
-      throw new BadRequestException('File is too small. Minimum size is 1KB.');
-    }
-    const fileExtension = path
-      .extname(file.originalname)
-      .toLocaleLowerCase()
-      .substring(1);
-    const fileName = `${tokenPayload.sub}.${fileExtension}`;
-    const fileFullPath = path.resolve(process.cwd(), 'pictures', fileName);
-    await fs.writeFile(fileFullPath, file.buffer);
-    return {
-      fieldname: file.fieldname,
-      originalname: file.originalname,
-      mimetype: file.mimetype,
-      buffer: {},
-      size: file.size,
-    };
+    return this.pessoasService.uploadPicture(file, tokenPayload);
   }
 }

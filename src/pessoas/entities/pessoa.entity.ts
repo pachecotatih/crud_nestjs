@@ -1,4 +1,4 @@
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsOptional } from 'class-validator';
 import { Recado } from 'src/recados/entities/recado.entity';
 import {
   Column,
@@ -38,4 +38,8 @@ export class Pessoa {
 
   @Column({ default: true })
   isActive!: boolean;
+
+  @IsOptional()
+  @Column({ default: '' })
+  picture!: string;
 }
