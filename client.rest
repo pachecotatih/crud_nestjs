@@ -13,23 +13,26 @@ Authorization: Bearer {{authToken}}
 
 ###
 POST {{baseUrl}}/recados
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
     "texto": "Comprar leite create",
-    "deId": 17,
     "paraId": 19
 }
 
 ###
-PATCH {{baseUrl}}/recados/26
+PATCH {{baseUrl}}/recados/50
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-    "texto":"Novo Texto"
+    "texto":"Novo Texto",
+    "lido": false
 }
 ###
-DELETE {{baseUrl}}/recados/26
+DELETE {{baseUrl}}/recados/48
+Authorization: Bearer {{authToken}}
 
 
 
