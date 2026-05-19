@@ -82,8 +82,8 @@ Content-Type: application/json
 }
 
 
-###
-# @name reauthenticate
+### Refresh Token
+# @name authenticate
 POST {{baseUrl}}/auth/refresh
 Content-Type: application/json
 

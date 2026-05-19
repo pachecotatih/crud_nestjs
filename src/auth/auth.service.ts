@@ -27,8 +27,11 @@ export class AuthService {
     let passwordIsValid = false;
     const pessoa = await this.pessoaRepository.findOneBy({
       email: loginDto.email,
+      isActive: true,
     });
-    if (pessoa) {
+    if (!pessoa) {
+      throw new UnauthorizedException('Pessoa não autorizada!');
+    } else {
       passwordIsValid = await this.hashingService.compare(
         loginDto.password,
         pessoa.passwordHash,
@@ -38,7 +41,7 @@ export class AuthService {
       throw new UnauthorizedException('Usuário ou senha inválidos');
     }
 
-    return this.createTokens(pessoa!);
+    return this.createTokens(pessoa);
   }
 
   private async createTokens(pessoa: Pessoa) {
@@ -81,9 +84,12 @@ export class AuthService {
         refreshTokenDto.refreshToken,
         this.jwtConfiguration,
       );
-      const pessoa = await this.pessoaRepository.findOneBy({ id: sub });
+      const pessoa = await this.pessoaRepository.findOneBy({
+        id: sub,
+        isActive: true,
+      });
       if (!pessoa) {
-        throw new NotFoundException('Pessoa não encontrada');
+        throw new Error('Pessoa não encontrada');
       }
       return this.createTokens(pessoa);
     } catch (error) {
