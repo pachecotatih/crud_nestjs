@@ -38,6 +38,7 @@ DELETE {{baseUrl}}/recados/26
 # PESSOAS
 ### 
 GET {{baseUrl}}/pessoas/?limit=30&offset=0&user=tatiana
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIzLCJlbWFpbCI6InRhdGlhbmFwYWNoZWNvMDlAZW1haWwuY29tIiwiaWF0IjoxNzc5MTk5NTgzLCJleHAiOjE3NzkyMDMxODMsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.s7WmYvDEuuQ9Vho9mrcNq8G_zFbGznTGhL9xTrGt8DM
 ###
 GET {{baseUrl}}/pessoas/14
 

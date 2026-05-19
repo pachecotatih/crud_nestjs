@@ -3,6 +3,11 @@ import { HashingServiceProtocol } from './hashing/hashing.service';
 import { BcryptService } from './hashing/bcrypt.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Pessoa } from 'src/pessoas/entities/pessoa.entity';
+import { ConfigModule } from '@nestjs/config';
+import jwtConfig from './config/jwt.config';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 @Global()
 @Module({
   providers: [
@@ -12,7 +17,12 @@ import { AuthService } from './auth.service';
     },
     AuthService,
   ],
+  imports: [
+    TypeOrmModule.forFeature([Pessoa]),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
+  ],
   controllers: [AuthController],
-  exports: [HashingServiceProtocol],
+  exports: [HashingServiceProtocol, JwtModule, ConfigModule],
 })
 export class AuthModule {}

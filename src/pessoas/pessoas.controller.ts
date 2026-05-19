@@ -7,11 +7,17 @@ import {
   Param,
   Delete,
   Inject,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PessoasService } from './pessoas.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
+import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 
+import { REQUEST_TOKEN_PAYLOAD_KEY } from 'src/auth/constants/auth.constants';
+
+@UseGuards(AuthTokenGuard)
 @Controller('pessoas')
 export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
@@ -22,7 +28,8 @@ export class PessoasController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Req() request: Request) {
+    console.log(request[REQUEST_TOKEN_PAYLOAD_KEY].sub);
     return this.pessoasService.findAll();
   }
 
