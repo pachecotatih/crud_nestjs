@@ -1,14 +1,15 @@
 @baseUrl = http://localhost:3000
+@authToken = {{authenticate.response.body.accessToken}}
 
 # RECADOS
 ### 
 GET {{baseUrl}}/recados
 ?limit=10
 &offset=0
-Authorization: Bearer 123456
+Authorization: Bearer {{authToken}}
 ###
 GET {{baseUrl}}/recados/47
-Authorization: Bearer 123456
+Authorization: Bearer {{authToken}}
 
 ###
 POST {{baseUrl}}/recados
@@ -38,34 +39,37 @@ DELETE {{baseUrl}}/recados/26
 # PESSOAS
 ### 
 GET {{baseUrl}}/pessoas/?limit=30&offset=0&user=tatiana
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIzLCJlbWFpbCI6InRhdGlhbmFwYWNoZWNvMDlAZW1haWwuY29tIiwiaWF0IjoxNzc5MTk5NTgzLCJleHAiOjE3NzkyMDMxODMsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.s7WmYvDEuuQ9Vho9mrcNq8G_zFbGznTGhL9xTrGt8DM
+Authorization: Bearer {{authToken}}
 ###
-GET {{baseUrl}}/pessoas/14
-
+GET {{baseUrl}}/pessoas/23
+Authorization: Bearer {{authToken}}
 ###
 POST {{baseUrl}}/pessoas
 Content-Type: application/json
 
 {
-    "email":"tatianapacheco09@email.com",
+    "email":"teste@email.com",
     "password":"123456",
     "nome":"Tatiana Pacheco"
 }
 
 ###
-PATCH {{baseUrl}}/pessoas/21
+PATCH {{baseUrl}}/pessoas/23
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
-    "nome":"Tati"
+    "nome":"Tatiana"
 }
 ###
-DELETE {{baseUrl}}/pessoas/14
+DELETE {{baseUrl}}/pessoas/25
+Authorization: Bearer {{authToken}}
 
 
 
 
-### 
+### Autenticação
+# @name authenticate
 POST {{baseUrl}}/auth
 Content-Type: application/json
 
