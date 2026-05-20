@@ -40,6 +40,7 @@ export class PessoasService {
       if (error.code === '23505') {
         throw new ConflictException('Email já cadastrado');
       }
+      throw error;
     }
   }
 
