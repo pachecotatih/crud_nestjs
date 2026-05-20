@@ -1,6 +1,3 @@
-// teste de integração
-
-import { create } from 'domain';
 import { PessoasController } from './pessoas.controller';
 
 describe('PessoasController', () => {
