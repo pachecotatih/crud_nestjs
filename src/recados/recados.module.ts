@@ -8,9 +8,11 @@ import { RecadosUtils } from './recados.utils';
 import { MyDynamicModule } from 'src/my-dynamic/my-dynamic.module';
 import { ConfigModule } from '@nestjs/config';
 import recadosConfig from './recados.config';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
+    EmailModule,
     ConfigModule.forFeature(recadosConfig),
     TypeOrmModule.forFeature([Recado]),
     forwardRef(() => PessoasModule),
@@ -21,6 +23,6 @@ import recadosConfig from './recados.config';
   ],
   controllers: [RecadosController],
   providers: [RecadosService, RecadosUtils],
-  exports: [RecadosUtils],
+  exports: [RecadosUtils, ],
 })
 export class RecadosModule {}

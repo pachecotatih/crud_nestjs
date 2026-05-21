@@ -12,9 +12,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import type { ConfigType } from '@nestjs/config';
-import recadosConfig from './recados.config';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { EmailService } from 'src/email/email.service';
 
 // Scope.DEFAULT -> O provider é um singleton, instanciado quando aplicação inicia e mantém a mesma instância
 // singleton -> quando uma classe foi instanciada, sempre retorna a mesma instância quando for reutilizá-la
@@ -28,8 +27,7 @@ export class RecadosService {
     @InjectRepository(Recado)
     private readonly recadoRepository: Repository<Recado>,
     private readonly pessoasService: PessoasService,
-    @Inject(recadosConfig.KEY)
-    private readonly recadosConfiguration: ConfigType<typeof recadosConfig>,
+    private readonly emailService: EmailService,
   ) {}
   throwNotFoundException() {
     throw new NotFoundException('Recado não encontrado');
@@ -92,8 +90,13 @@ export class RecadosService {
       lido: false,
       data: new Date(),
     };
-    const recadoSave = await this.recadoRepository.create(novoRecado);
+    const recadoSave = this.recadoRepository.create(novoRecado);
     await this.recadoRepository.save(recadoSave);
+    await this.emailService.sendEmail(
+      para.email,
+      `Você recebeu um recado de ${de.nome} - <${de.email}>`,
+      createRecadoDto.texto,
+    );
     return {
       ...recadoSave,
       de: {
