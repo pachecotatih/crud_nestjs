@@ -14,6 +14,7 @@ import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 import { EmailService } from 'src/email/email.service';
+import { ResponseRecadoDto } from './dto/response-recado.dto';
 
 // Scope.DEFAULT -> O provider é um singleton, instanciado quando aplicação inicia e mantém a mesma instância
 // singleton -> quando uma classe foi instanciada, sempre retorna a mesma instância quando for reutilizá-la
@@ -33,7 +34,7 @@ export class RecadosService {
     throw new NotFoundException('Recado não encontrado');
   }
 
-  async findAll(paginationDto?: PaginationDto) {
+  async findAll(paginationDto?: PaginationDto): Promise<ResponseRecadoDto[]> {
     const { limit = 10, offset = 0 } = paginationDto ?? {};
     const recados = await this.recadoRepository.find({
       take: limit,
@@ -54,7 +55,7 @@ export class RecadosService {
     return recados;
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<ResponseRecadoDto | undefined> {
     const recado = await this.recadoRepository.findOne({
       where: { id },
       relations: ['de', 'para'],
@@ -77,7 +78,7 @@ export class RecadosService {
   async create(
     createRecadoDto: CreateRecadoDto,
     tokenPayload: TokenPayloadDto,
-  ) {
+  ): Promise<ResponseRecadoDto> {
     const { paraId } = createRecadoDto;
 
     const de = await this.pessoasService.findOne(tokenPayload.sub);
@@ -92,11 +93,11 @@ export class RecadosService {
     };
     const recadoSave = this.recadoRepository.create(novoRecado);
     await this.recadoRepository.save(recadoSave);
-    await this.emailService.sendEmail(
-      para.email,
-      `Você recebeu um recado de ${de.nome} - <${de.email}>`,
-      createRecadoDto.texto,
-    );
+    // await this.emailService.sendEmail(
+    //   para.email,
+    //   `Você recebeu um recado de ${de.nome} - <${de.email}>`,
+    //   createRecadoDto.texto,
+    // );
     return {
       ...recadoSave,
       de: {
@@ -114,7 +115,7 @@ export class RecadosService {
     id: number,
     updateRecadoDto: UpdateRecadoDto,
     tokenPayload: TokenPayloadDto,
-  ) {
+  ): Promise<ResponseRecadoDto | void> {
     const recado = await this.findOne(id);
 
     if (!recado) return this.throwNotFoundException();
@@ -129,7 +130,10 @@ export class RecadosService {
     return recado;
   }
 
-  async remove(id: number, tokenPayload: TokenPayloadDto) {
+  async remove(
+    id: number,
+    tokenPayload: TokenPayloadDto,
+  ): Promise<ResponseRecadoDto | void> {
     const recado = await this.findOne(id);
     if (recado) {
       if (recado.de.id !== tokenPayload.sub) {
@@ -137,7 +141,8 @@ export class RecadosService {
           'Esse recado nao pertence ao usuario logado',
         );
       }
-      return this.recadoRepository.remove(recado);
+      await this.recadoRepository.delete(recado.id);
+      return recado;
     }
     this.throwNotFoundException();
   }

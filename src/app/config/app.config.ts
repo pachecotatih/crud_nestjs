@@ -1,4 +1,8 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 
 export default (app: INestApplication) => {
@@ -9,5 +13,8 @@ export default (app: INestApplication) => {
       transform: false, // tenta transformar os tipos de dados de parâmetros e DTOs, mas a performance não é boa
     }),
     new ParseIntIdPipe(),
+  );
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get('Reflector')),
   );
 };

@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { IsEmail, IsOptional } from 'class-validator';
 import { Recado } from 'src/recados/entities/recado.entity';
 import {
@@ -17,6 +18,7 @@ export class Pessoa {
   @IsEmail()
   email!: string;
   @Column({ length: 255 })
+  @Exclude()
   passwordHash!: string;
   @Column({ length: 100 })
   nome!: string;
