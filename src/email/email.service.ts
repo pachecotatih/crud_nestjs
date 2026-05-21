@@ -9,7 +9,7 @@ export class EmailService {
       port: Number(process.env.EMAIL_PORT) || 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.EMAIL_FROM,
+        user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
