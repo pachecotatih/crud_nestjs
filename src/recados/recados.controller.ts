@@ -26,6 +26,7 @@ import {
   ApiQuery,
   ApiResponse,
 } from '@nestjs/swagger';
+import { ResponseRecadoDto } from './dto/response-recado.dto';
 
 // PATCH / PUT -> Atualizar um recado
 
@@ -58,6 +59,11 @@ export class RecadosController {
     description: 'Quantidade de recados a serem pulados',
     default: 0,
   })
+  @ApiResponse({
+    status: 200,
+    description: 'Recados encontrados',
+    type: [ResponseRecadoDto],
+  })
   async findAll(@Query() paginationDto: PaginationDto) {
     const recados = await this.recadosService.findAll(paginationDto);
     return recados;
@@ -72,7 +78,11 @@ export class RecadosController {
     description: 'ID do recado a ser encontrado',
   })
   @ApiResponse({ status: 404, description: 'Recado não encontrado' })
-  @ApiResponse({ status: 200, description: 'Recado encontrado' })
+  @ApiResponse({
+    status: 200,
+    description: 'Recado encontrado',
+    type: ResponseRecadoDto,
+  })
   //Encontrar um recado
   findOne(@Param('id') id: number) {
     return this.recadosService.findOne(id);
@@ -80,7 +90,11 @@ export class RecadosController {
   @UseGuards(AuthTokenGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Criar um recado' })
-  @ApiResponse({ status: 201, description: 'Recado criado' })
+  @ApiResponse({
+    status: 201,
+    description: 'Recado criado',
+    type: ResponseRecadoDto,
+  })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @Post()
   create(
@@ -92,7 +106,11 @@ export class RecadosController {
   @UseGuards(AuthTokenGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualizar um recado' })
-  @ApiResponse({ status: 200, description: 'Recado atualizado' })
+  @ApiResponse({
+    status: 200,
+    description: 'Recado atualizado',
+    type: ResponseRecadoDto,
+  })
   @ApiResponse({ status: 404, description: 'Recado não encontrado' })
   @ApiParam({
     name: 'id',
@@ -111,7 +129,12 @@ export class RecadosController {
   @UseGuards(AuthTokenGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Remover um recado' })
-  @ApiResponse({ status: 200, description: 'Recado removido' })
+  @ApiResponse({
+    status: 200,
+    description: 'Recado removido',
+    type: Boolean,
+    example: true,
+  })
   @ApiResponse({ status: 404, description: 'Recado não encontrado' })
   @ApiParam({
     name: 'id',

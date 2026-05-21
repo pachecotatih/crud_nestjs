@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsPositive,
@@ -7,6 +8,14 @@ import {
 } from 'class-validator';
 
 export class CreateRecadoDto {
+  @ApiProperty({
+    description: 'Texto do recado',
+    example: 'Recado de exemplo',
+    type: String,
+    required: true,
+    minLength: 5,
+    maxLength: 255,
+  })
   @IsString({
     message: 'O texto deve ser uma string',
   })
@@ -21,6 +30,12 @@ export class CreateRecadoDto {
   })
   readonly texto!: string;
 
+  @ApiProperty({
+    description: 'ID da pessoa para quem o recado é destinado',
+    example: 1,
+    type: Number,
+    required: true,
+  })
   @IsPositive()
   paraId!: number;
 }

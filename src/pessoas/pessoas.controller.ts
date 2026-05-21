@@ -28,6 +28,8 @@ import * as fs from 'fs/promises'; //filesystem
 import { randomUUID } from 'crypto';
 import {
   ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -115,6 +117,18 @@ export class PessoasController {
   @ApiResponse({ status: 200, description: 'Foto de perfil atualizada' })
   @ApiResponse({ status: 400, description: 'Arquivo inválido' })
   @ApiResponse({ status: 404, description: 'Pessoa não encontrada' })
+  @ApiConsumes('multipart/form-data') // Indica que o endpoint consome dados multipart
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post('upload-picture')
   async uploadPicture(
     @UploadedFile(
