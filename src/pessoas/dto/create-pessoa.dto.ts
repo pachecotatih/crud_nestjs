@@ -14,7 +14,6 @@ export class CreatePessoaDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  @Exclude()
   password!: string;
   @IsString()
   @IsNotEmpty()
