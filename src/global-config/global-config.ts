@@ -5,7 +5,7 @@ export default registerAs('globalConfig', () => ({
     url: process.env.DATABASE_URL,
     autoLoadEntities: process.env.DATABASE_AUTOLOADENTITIES,
     synchronize: process.env.DATABASE_SYNCHRONIZE,
-    ssl: process.env.SSL,
+    ssl: process.env.DATABASE_SSL,
   },
   environment: process.env.NODE_ENV || 'development',
 }));
