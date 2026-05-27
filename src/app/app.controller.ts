@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import type { ConfigType } from '@nestjs/config';
 import globalConfig from 'src/global-config/global-config';
@@ -12,7 +12,8 @@ export class AppController {
   ) {}
 
   @Get()
-  getHello(): string {
+  @Render('index')
+  getHello(): { message: string } {
     return this.appService.getHello();
   }
 }

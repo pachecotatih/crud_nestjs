@@ -5,9 +5,10 @@ import { ParseIntIdPipe } from './common/pipes/parse-int-id.pipe';
 import appConfig from './app/config/app.config';
 import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   appConfig(app);
 
   if (process.env.NODE_ENV === 'production') {
@@ -32,6 +33,9 @@ async function bootstrap() {
     customCss: '.swagger-ui .topbar { display: none }',
     customSiteTitle: 'Recados API',
   });
+  app.useStaticAssets(join(process.cwd(), 'public'));
+  app.setBaseViewsDir(join(process.cwd(), 'views'));
+  app.setViewEngine('ejs');
 
   await app.listen(process.env.APP_PORT ?? 3000);
 }
