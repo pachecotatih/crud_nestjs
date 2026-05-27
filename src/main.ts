@@ -16,7 +16,7 @@ async function bootstrap() {
 
     // cors -> permitir que outro domínio faça requests na nossa API
     app.enableCors({
-      origin: 'https://meuapp.com.br',
+      origin: 'https://crud-nestjs-a9ey.onrender.com',
     });
   }
 
