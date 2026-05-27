@@ -34,14 +34,10 @@ import { APP_GUARD } from '@nestjs/core';
         globalConfigurations: ConfigType<typeof globalConfig>,
       ) => {
         return {
-          type: globalConfigurations.database.type,
-          host: globalConfigurations.database.host,
-          port: globalConfigurations.database.port,
-          username: globalConfigurations.database.username,
-          password: globalConfigurations.database.password,
-          database: globalConfigurations.database.database,
-          autoLoadEntities: globalConfigurations.database.autoLoadEntities, // carrega automaticamente as entidades do projeto sem especificá-las
-          synchronize: globalConfigurations.database.synchronize, // Sincroniza com o banco de dados. Não deve ser usado em produção
+          type: 'postgres',
+          url: globalConfigurations.database.url,
+          autoLoadEntities: true,
+          synchronize: true,
         };
       },
     }),
