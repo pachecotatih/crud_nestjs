@@ -61,3 +61,5 @@ package-lock.json
 # Neon
 .agents/
 skills-lock.json
+
+client.rest
