@@ -34,13 +34,18 @@ export class RecadosService {
     throw new NotFoundException('Recado não encontrado');
   }
 
-  async findAll(paginationDto?: PaginationDto): Promise<ResponseRecadoDto[]> {
+  async findAll(
+    tokenPayload: TokenPayloadDto,
+    paginationDto?: PaginationDto,
+  ): Promise<ResponseRecadoDto[]> {
+    const userId = tokenPayload.sub;
     const { limit = 10, offset = 0 } = paginationDto ?? {};
     const recados = await this.recadoRepository.find({
       take: limit,
       skip: offset,
       relations: ['de', 'para'],
       order: { id: 'DESC' },
+      where: [{ de: { id: userId } }],
       select: {
         de: {
           id: true,

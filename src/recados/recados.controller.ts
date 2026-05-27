@@ -64,8 +64,16 @@ export class RecadosController {
     description: 'Recados encontrados',
     type: [ResponseRecadoDto],
   })
-  async findAll(@Query() paginationDto: PaginationDto) {
-    const recados = await this.recadosService.findAll(paginationDto);
+  @UseGuards(AuthTokenGuard)
+  @ApiBearerAuth()
+  async findAll(
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+    @Query() paginationDto?: PaginationDto,
+  ) {
+    const recados = await this.recadosService.findAll(
+      tokenPayload,
+      paginationDto,
+    );
     return recados;
   }
 
@@ -83,6 +91,8 @@ export class RecadosController {
     description: 'Recado encontrado',
     type: ResponseRecadoDto,
   })
+  @UseGuards(AuthTokenGuard)
+  @ApiBearerAuth()
   //Encontrar um recado
   findOne(@Param('id') id: number) {
     return this.recadosService.findOne(id);
