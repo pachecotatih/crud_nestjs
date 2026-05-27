@@ -43,6 +43,7 @@ export class PessoasController {
   @ApiResponse({ status: 201, description: 'Pessoa criada' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   create(@Body() createPessoaDto: CreatePessoaDto) {
+    console.log(createPessoaDto);
     return this.pessoasService.create(createPessoaDto);
   }
 
