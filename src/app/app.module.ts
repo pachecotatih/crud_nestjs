@@ -40,7 +40,6 @@ import { APP_GUARD } from '@nestjs/core';
             globalConfigurations.database.autoLoadEntities,
           ),
           synchronize: Boolean(globalConfigurations.database.synchronize),
-          ssl: globalConfigurations.database.ssl,
         };
       },
     }),
