@@ -36,8 +36,11 @@ import { APP_GUARD } from '@nestjs/core';
         return {
           type: 'postgres',
           url: globalConfigurations.database.url,
-          autoLoadEntities: true,
-          synchronize: true,
+          autoLoadEntities: Boolean(
+            globalConfigurations.database.autoLoadEntities,
+          ),
+          synchronize: Boolean(globalConfigurations.database.synchronize),
+          ssl: globalConfigurations.database.ssl,
         };
       },
     }),
